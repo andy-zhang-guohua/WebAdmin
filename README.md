@@ -4,3 +4,8 @@
 [相关参考文章:企业管理系统前后端分离架构设计 系列一 权限模型篇](https://segmentfault.com/a/1190000016766750)
 
 
+[在线演示](http://jaycewu.coding.me/3YAdmin-preview)
+[前端源代码](https://github.com/wjkang/3YAdmin.git)
+[后端源代码](https://github.com/wjkang/quasar-admin-server.git) (针对前端 3YAdmin请使用分支3YAdmin)
+
+
