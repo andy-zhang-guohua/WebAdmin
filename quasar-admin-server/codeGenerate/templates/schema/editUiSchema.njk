@@ -1,0 +1,25 @@
+export default {
+    <% for property in model.properties %>
+        <% if property.edit %>
+           "<$ property.key $>":{
+               "ui:widget": "input",
+                "ui:options": {
+                    "type": "text",
+                    "placeholder": ""
+                },
+                "ui:rules": [
+                    { required: true, message: '请输入<$ property.title $>' },
+                    { max: 25, message: '最多输入25字符' }
+                ],
+                "ui:title": "<$ property.title $>",
+                "ui:description": "",
+                "ui:formItemConfig": {
+                    "hasFeedback": true,
+                    "extra":"",
+                    "labelCol": { span: 6 },
+                    "wrapperCol": { span: 16 }
+                }
+           },
+        <% endif%>
+    <% endfor %>
+}
