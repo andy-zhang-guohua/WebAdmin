@@ -17,7 +17,6 @@ export default {
     "page404": LoadablePageComponents.Page404,
     "page403": LoadablePageComponents.Page403,
     "requestlog": LoadablePageComponents.RequestLog,
-    // example
     "error_404": LoadablePageComponents.Page404,
     "error_403": LoadablePageComponents.Page403,
     'permission_test': LoadablePageComponents.PermissionTest,

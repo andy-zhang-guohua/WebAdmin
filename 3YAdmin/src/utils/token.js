@@ -1,5 +1,4 @@
-
-const TokenKey = '3YAdmin'
+const TokenKey = 'user-token'
 
 export function getToken() {
   return localStorage.getItem(TokenKey)

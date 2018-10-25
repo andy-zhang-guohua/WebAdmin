@@ -13,7 +13,7 @@ export default () => (
         <AuthorizedRoute exact path="/app/permission/rolepermission" component={LoadablePageComponents.RolePermission}/>
         <AuthorizedRoute exact path="/app/permission/roleuser" component={LoadablePageComponents.RoleUser}/>
         <AuthorizedRoute exact path="/app/permission/userrole" component={LoadablePageComponents.UserRole}/>
-        <AuthorizedRoute exact path="/app/user/index" component={LoadablePageComponents.User}/>
+        <AuthorizedRoute exact path="/app/user" component={LoadablePageComponents.User}/>
         <AuthorizedRoute exact path="/app/requestlog" component={LoadablePageComponents.RequestLog}/>
         {/* example */}
         <AuthorizedRoute exact path="/app/example/404" component={LoadablePageComponents.Page404}/>

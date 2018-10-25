@@ -179,7 +179,6 @@ class RolePermission extends React.PureComponent {
                     visible={this.state.editModalVisible}
                     title={<span>编辑角色&nbsp;&nbsp;<Tag color="#2db7f5">{this.editFormData.name}</Tag>&nbsp;权限</span>}
                     onCancel={this.editModalOnCancel}
-
                     formData={this.editFormData}
                     handFormSubmit={this.saveRolePermission}
                 />

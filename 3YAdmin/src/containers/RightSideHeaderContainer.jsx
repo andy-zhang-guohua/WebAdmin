@@ -109,7 +109,6 @@ class RightSideHeaderContainer extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
-    console.log("state",state);
     return {
         name: state.user.name,
         avatar: state.user.avatar,

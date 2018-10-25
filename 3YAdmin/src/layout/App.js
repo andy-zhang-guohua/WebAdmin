@@ -26,7 +26,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.initAppData();//数据初始化完后再触发一次render
+        this._initApplicationData();//数据初始化完后再触发一次render
         this.getClientWidth();//判断屏幕尺寸再触发一次render(不需要可去掉)
         window.onresize = () => {
             this.getClientWidth();
@@ -77,40 +77,41 @@ class App extends Component {
     toggleNavTab = () => {
         this.setState({navTabShow: !this.state.navTabShow});
     }
-    initAppData = async () => { //获取用户信息,菜单,权限列表(整个应用就一种layout布局,App就是相当母版页,不必在AuthorizedRoute里每次路由跳转的时候判断是否需要获取,是否登录也在此处判断)
-        //没有登录，跳转到登录界面，并记下当前路径
+    _initApplicationData = async () => {
+        //获取用户信息,菜单,权限列表(整个应用就一种layout布局,App就是相当母版页,不必在AuthorizedRoute里每次路由跳转的时候判断是否需要获取,是否登录也在此处判断)
+        //没有登录，跳转到登录界面
         const token = getToken();
         if (!token) {
             this.props.history.push('/login');
             return;
         }
-        const [infoRes, menuRes] = await Promise.all([getUserInfo(), getAccessMenu()]);
-        console.log("menus", menuRes);
-        const permission = [...infoRes.data.userRole, ...infoRes.data.userPermission];
-        const isAdmin = infoRes.data.isAdmin;
+        // 从web API 服务器获取用户信息和用户的可访问菜单(树形结构)
+        const [userInfoResponse, userMenusResponse] = await Promise.all([getUserInfo(), getAccessMenu()]);
+        const permission = [...userInfoResponse.data.userRole, ...userInfoResponse.data.userPermission];
+        const isAdmin = userInfoResponse.data.isAdmin;
         const userInfo = {
-            name: infoRes.data.userName,
-            avatar: infoRes.data.avatarUrl,
+            name: userInfoResponse.data.userName,
+            avatar: userInfoResponse.data.avatarUrl,
             isAdmin: isAdmin,
             permission: permission
         }
         localStorage.setItem("permission", JSON.stringify(permission));
         localStorage.setItem("isAdmin", isAdmin);
-        menuRes.data.push(...constantMenu);
-        const openAccessMenu = util.openAccessMenu(menuRes.data);
-        const moduleList = menuRes.data.filter(item => {
-            console.log("current menu item:",item);
-            return item.leftMenu
-        });
-        console.log("moduleList:", moduleList);
-        const currentModule = moduleList[0].name;
-        const moduleMenu = moduleList[0].children;
+        userMenusResponse.data.push(...constantMenu);
+
+        // modules 记录顶层菜单，将他们认为是系统模块,会展示到页面系统模块导航区域
+        // 这里其实还是将所有 leftMenu === true 菜单放到了 modules 中，不过这个语义 和 modules 记录顶层菜单
+        // 记录顶层菜单的语义是一致的,其实主要需要的是顶层菜单的两个属性{title,name}
+        const modules = userMenusResponse.data.filter(item => item.leftMenu);
+        const currentModule = modules[0].name;
+        const moduleMenu = modules[0].children;
+        const openAccessMenu = util.openAccessMenu(userMenusResponse.data);
         this.props.updateAccessMenu({
             currentModule: currentModule,
-            accessMenu: menuRes.data,
+            accessMenu: userMenusResponse.data,
             openAccessMenu: openAccessMenu,
             moduleMenu: moduleMenu,
-            modules: moduleList
+            modules: modules
         });
         this.props.updateUserInfo(userInfo);
         this.initChildData(this.props);

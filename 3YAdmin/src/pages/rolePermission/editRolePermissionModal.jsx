@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Tree } from 'antd';
-import { getMenuFunctions } from '../../services/api';
+import {Modal, Tree} from 'antd';
+import {getMenuFunctions} from '../../services/api';
 
 const TreeNode = Tree.TreeNode;
 
@@ -19,7 +19,7 @@ class EditModal extends React.PureComponent {
         this.defaultCheckKeys = []
         this.checkedKeys = []
     }
-    onOk =async () => {
+    onOk = async () => {
         let data = {
             roleId: this.props.formData.id,
             permissions: this.checkedKeys,
@@ -63,12 +63,11 @@ class EditModal extends React.PureComponent {
     onCheck = (checkedKeys, info) => {
         this.checkedKeys = checkedKeys.filter(s => s.indexOf("menu") < 0);
     }
+
     componentWillReceiveProps(nextProps) {
-        console.log(121212)
         if (!nextProps.visible) {
             return;
         }
-        console.log(444444444)
         let roleId = nextProps.formData.id;
         getMenuFunctions({
             menuId: 0,
@@ -83,20 +82,26 @@ class EditModal extends React.PureComponent {
             });
         });
     }
+
     renderTreeNode = (menuFunctionList) => {
         let list = [];
         for (let item of menuFunctionList) {
             if (item.children && item.children.length > 0) {
                 if (item.isPermissionChild) {
-                    list.push(<TreeNode className="permission-tree-node" title={item.name} key={item.id}>{this.renderTreeNode(item.children)}</TreeNode>);
+                    list.push(<TreeNode className="permission-tree-node" title={item.name}
+                                        key={item.id}>{this.renderTreeNode(item.children)}</TreeNode>);
                 } else {
-                    list.push(<TreeNode className="clear-both" title={<span style={{ color: 'rgb(181, 185, 189)' }}>{item.title}</span>} key={'menu' + item.id}>{this.renderTreeNode(item.children)}</TreeNode>);
+                    list.push(<TreeNode className="clear-both"
+                                        title={<span style={{color: 'rgb(181, 185, 189)'}}>{item.title}</span>}
+                                        key={'menu' + item.id}>{this.renderTreeNode(item.children)}</TreeNode>);
                 }
             } else {
                 if (item.isPermissionChild) {
                     list.push(<TreeNode className="permission-tree-node" title={item.name} key={item.id}></TreeNode>);
                 } else {
-                    list.push(<TreeNode className="clear-both" title={<span style={{ color: 'rgb(181, 185, 189)' }}>{item.title}</span>} key={'menu' + item.id}></TreeNode>);
+                    list.push(<TreeNode className="clear-both"
+                                        title={<span style={{color: 'rgb(181, 185, 189)'}}>{item.title}</span>}
+                                        key={'menu' + item.id}></TreeNode>);
                 }
             }
         }
@@ -114,6 +119,7 @@ class EditModal extends React.PureComponent {
             {this.renderTreeNode(this.state.menuFunctionList)}
         </Tree>
     }
+
     render() {
         console.log("render");
         return (
@@ -128,7 +134,7 @@ class EditModal extends React.PureComponent {
                 destroyOnClose
             >
                 {this.state.menuFunctionList.length > 0 ? this.renderTree() : null}
-            </Modal >
+            </Modal>
         )
     }
 }

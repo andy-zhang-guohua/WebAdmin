@@ -1,7 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Login from '@/pages/Login';
-import Page404 from '@/pages/Page404';
+import Login from '../pages/Login';
+import Page404 from '../pages/Page404';
 let Layout = null;
 //process.env.REACT_APP_LAYOUT_MODE不在definePlugin里配，两个都会打包
 //if (process.env.REACT_APP_LAYOUT_MODE==='tab') {

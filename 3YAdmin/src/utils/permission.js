@@ -2,11 +2,11 @@ let permission = {}
 
 permission.check = function (config) {
     if (config.permission && config.permission.length > 0) {
-        let needPermissions = config.permission;
-        let permissions = JSON.parse(localStorage.getItem('permission'));
-        let isAdmin = localStorage.getItem('isAdmin');
-        let hasPermission = permissions.some(s => {
-            return needPermissions.indexOf(s) > -1;
+        const neededPermissions = config.permission;
+        const userPermissions = JSON.parse(localStorage.getItem('permission'));
+        const isAdmin = localStorage.getItem('isAdmin');
+        const hasPermission = userPermissions.some(s => {
+            return neededPermissions.indexOf(s) > -1;
         })
         if (!hasPermission && isAdmin == 0) {
             return false
