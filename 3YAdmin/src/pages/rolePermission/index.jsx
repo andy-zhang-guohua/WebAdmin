@@ -1,13 +1,10 @@
 import React from 'react';
-import { Table, Divider, notification, Tag } from 'antd';
-import {
-    getRolePagedList,
-    savePermission
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import schema from '@/schema/role';
+import {Divider, notification, Table, Tag} from 'antd';
+import {getRolePagedList, savePermission} from '../../services/api';
+import SearchForm from '../../schema/SearchForm';
+import schema from '../../schema/role';
 import EditRolePermissionModal from './editRolePermissionModal';
-import '@/style/role-permission.less';
+import '../../style/role-permission.less';
 
 class RolePermission extends React.PureComponent {
     state = {
@@ -36,36 +33,34 @@ class RolePermission extends React.PureComponent {
         dataIndex: 'name',
         sorter: true
     },
-    {
-        title: '角色编码',
-        dataIndex: 'code',
-        sorter: true
-    },
-    {
-        title: '操作',
-        dataIndex: 'id',
-        fixed: 'right',
-        width: 120,
-        render: (text, record) => {
-            return <div>
-                <a
-                    href="javascript:;"
-                    onClick={() => this.editRolePermission(record)}
+        {
+            title: '角色编码',
+            dataIndex: 'code',
+            sorter: true
+        },
+        {
+            title: '操作',
+            dataIndex: 'id',
+            fixed: 'right',
+            width: 120,
+            render: (text, record) => {
+                return <div>
+                    <a
+                        href="javascript:;"
+                        onClick={() => this.editRolePermission(record)}
 
-                >
-                    编辑角色权限
-                </a>
-            </div>
-        }
-    }]
-    editFormData = {
-
-    }
+                    >
+                        编辑角色权限
+                    </a>
+                </div>
+            }
+        }]
+    editFormData = {}
     /**
      * @description 查询
      */
     handleSearch = (filter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = 1;
         this.setState({
             tableFilter: filter,
@@ -89,7 +84,7 @@ class RolePermission extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -109,7 +104,7 @@ class RolePermission extends React.PureComponent {
         this.fetch(query);
     }
     editRolePermission = (record) => {
-        this.editFormData = { ...record };
+        this.editFormData = {...record};
         console.log(this.editFormData)
         this.setState({
             editModalVisible: true
@@ -121,7 +116,7 @@ class RolePermission extends React.PureComponent {
         });
     }
     saveRolePermission = async (data) => {
-        let formData = {...data }
+        let formData = {...data}
         try {
             await savePermission(formData);
             notification.success({
@@ -147,10 +142,10 @@ class RolePermission extends React.PureComponent {
         this.fetch(query);
     }
     fetch = async (query = {}) => {
-        this.setState({ tableLoading: true });
+        this.setState({tableLoading: true});
         let dataRes = await getRolePagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.tablePagination };
+        const pagination = {...this.state.tablePagination};
         pagination.total = data.totalCount;
         this.setState({
             tableLoading: false,
@@ -158,15 +153,18 @@ class RolePermission extends React.PureComponent {
             tablePagination: pagination
         });
     }
+
     componentDidMount() {
         this.refresh()
     }
+
     render() {
         console.log("RolePermission render")
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
                 <Table
                     columns={this.columns}
                     rowKey={record => record.id}
@@ -174,7 +172,7 @@ class RolePermission extends React.PureComponent {
                     pagination={this.state.tablePagination}
                     loading={this.state.tableLoading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
                 <EditRolePermissionModal

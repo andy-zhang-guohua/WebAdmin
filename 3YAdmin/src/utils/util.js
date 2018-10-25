@@ -89,33 +89,33 @@ util.handleTitle = function (vm, item) {
 };
 
 
-util.openAccesseMenu = function (accesseMenu) {
-    let openAccesseMenu = [];
+util.openAccessMenu = function (accessMenu) {
+    const openAccessMenu = [];
     let forFn = function (menulist, parentName) {
         for (var item of menulist) {
             item.parentName = parentName;
-            openAccesseMenu.push(item)
+            openAccessMenu.push(item)
             if (item.children && item.children.length > 0) {
                 forFn(item.children, item.name)
             }
         }
     }
-    forFn(accesseMenu, '');
-    return openAccesseMenu;
+    forFn(accessMenu, '');
+    return openAccessMenu;
 }
 
 util.openTreeData = (data) => {
-    let openAccesseMenu = [];
+    let openAccessMenu = [];
     let forFn = function (data) {
         for (var item of data) {
-            openAccesseMenu.push({ ...item })
+            openAccessMenu.push({ ...item })
             if (item.children && item.children.length > 0) {
                 forFn(item.children)
             }
         }
     }
     forFn(data);
-    return openAccesseMenu;
+    return openAccessMenu;
 }
 
 export default util;

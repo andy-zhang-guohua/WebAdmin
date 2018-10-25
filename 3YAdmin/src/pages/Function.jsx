@@ -1,19 +1,19 @@
 import React from 'react';
-import { Table, Popconfirm, Divider, Button, Modal, notification } from 'antd';
+import {Table, Popconfirm, Divider, Button, Modal, notification} from 'antd';
 import {
     getFunctionPagedList,
     delFunction,
     delFunctions,
     saveFunction
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import CommonForm from '@/schema/CommonForm';
-import schema from '@/schema/function';
-import PermissionContainer from 'permission';
-import formRemoteDataUtil from '@/schema/FormRemoteDataUtil';
-import util from '@/utils/util';
+} from '../services/api';
+import SearchForm from '../schema/SearchForm';
+import CommonForm from '../schema/CommonForm';
+import schema from '../schema/function';
+import PermissionContainer from '../containers/PermissionContainer';
+import formRemoteDataUtil from '../schema/FormRemoteDataUtil';
+import util from '../utils/util';
 
-const style = { display: 'none' };
+const style = {display: 'none'};
 
 class Function extends React.PureComponent {
     state = {
@@ -44,45 +44,43 @@ class Function extends React.PureComponent {
         dataIndex: 'module',
         sorter: true
     },
-    {
-        title: '功能名称',
-        dataIndex: 'name',
-        sorter: true
-    },
-    {
-        title: '功能编码',
-        dataIndex: 'code',
-        sorter: true
-    },
-    {
-        title: '操作',
-        dataIndex: 'id',
-        fixed: 'right',
-        width: 120,
-        render: (text, record) => {
-            return <div>
-                <a
-                    href="javascript:;"
-                    onClick={() => this.editFunction(record)}
+        {
+            title: '功能名称',
+            dataIndex: 'name',
+            sorter: true
+        },
+        {
+            title: '功能编码',
+            dataIndex: 'code',
+            sorter: true
+        },
+        {
+            title: '操作',
+            dataIndex: 'id',
+            fixed: 'right',
+            width: 120,
+            render: (text, record) => {
+                return <div>
+                    <a
+                        href="javascript:;"
+                        onClick={() => this.editFunction(record)}
 
-                >
-                    编辑
-                </a>
-                <Divider type="vertical" />
-                <Popconfirm title="确定删除?" onConfirm={() => this.delFunction(record.id)}>
-                    <a href="javascript:;">删除</a>
-                </Popconfirm>
-            </div>
-        }
-    }]
-    editFormData = {
-
-    }
+                    >
+                        编辑
+                    </a>
+                    <Divider type="vertical"/>
+                    <Popconfirm title="确定删除?" onConfirm={() => this.delFunction(record.id)}>
+                        <a href="javascript:;">删除</a>
+                    </Popconfirm>
+                </div>
+            }
+        }]
+    editFormData = {}
     fetch = async (query = {}) => {
-        this.setState({ loading: true });
+        this.setState({loading: true});
         let dataRes = await getFunctionPagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.pagination };
+        const pagination = {...this.state.pagination};
         pagination.total = data.totalCount;
         this.setState({
             loading: false,
@@ -91,7 +89,7 @@ class Function extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.pagination };
+        const pager = {...this.state.pagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -111,7 +109,7 @@ class Function extends React.PureComponent {
         this.fetch(query);
     }
     handleSearch = (filter) => {
-        const pager = { ...this.state.pagination };
+        const pager = {...this.state.pagination};
         pager.current = 1;//查询回到第一页
         this.setState({
             filter: filter,
@@ -132,11 +130,11 @@ class Function extends React.PureComponent {
         });
     }
     onSelectChange = (selectedRowKeys) => {
-        this.setState({ selectedRowKeys });
+        this.setState({selectedRowKeys});
     }
     delFunction = async (id) => {
         try {
-            await delFunction({ id: id });
+            await delFunction({id: id});
             notification.success({
                 placement: 'bottomLeft bottomRight',
                 message: '删除成功',
@@ -178,13 +176,13 @@ class Function extends React.PureComponent {
         let openMenuList = util.openTreeData(menuList);
         let menuWithParent = util.getTreeEleWithParent(record.moduleId, openMenuList);
         let moduleId = menuWithParent.map(s => s.id);
-        this.editFormData = { ...record, moduleId };
+        this.editFormData = {...record, moduleId};
         this.setState({
             editModalVisible: true
         })
     }
     saveFunction = async (data) => {
-        let formData = { ...this.editFormData, ...data }
+        let formData = {...this.editFormData, ...data}
         let menuList = formRemoteDataUtil.getData(schema.editSchema["$id"] + "_moduleId");
         formData.moduleId = formData.moduleId[formData.moduleId.length - 1]
         let menu = util.getTreeEleByPropertyValue(formData.moduleId, "id", menuList);
@@ -224,6 +222,7 @@ class Function extends React.PureComponent {
         };
         this.fetch(query);
     }
+
     componentDidMount() {
         this.fetch({
             pageIndex: this.state.pagination.current,
@@ -231,9 +230,10 @@ class Function extends React.PureComponent {
             filter: this.state.filter
         });
     }
+
     render() {
         console.log("Function render")
-        const { selectedRowKeys } = this.state;
+        const {selectedRowKeys} = this.state;
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -241,9 +241,10 @@ class Function extends React.PureComponent {
         const hasSelected = selectedRowKeys.length > 0;
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
-                <div style={{ marginBottom: 16 }}>
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
+                <div style={{marginBottom: 16}}>
                     <PermissionContainer permission={["function_edit"]}>
                         <Button
                             type="primary"
@@ -251,18 +252,18 @@ class Function extends React.PureComponent {
                             onClick={this.addFunction}
                         >
                             新增
-                    </Button>
+                        </Button>
                     </PermissionContainer>
-                    <Divider type="vertical" />
+                    <Divider type="vertical"/>
                     <PermissionContainer permission={["function_del"]}>
-                        <Popconfirm title="确定删除?" onConfirm={this.batchDelFunction}>
+                        <Popconfirm title="确定删除这些功能?" onConfirm={this.batchDelFunction}>
                             <Button
                                 type="danger"
                                 disabled={!hasSelected}
                                 icon="delete"
                             >
                                 删除
-                        </Button>
+                            </Button>
                         </Popconfirm>
                     </PermissionContainer>
                 </div>
@@ -274,7 +275,7 @@ class Function extends React.PureComponent {
                     pagination={this.state.pagination}
                     loading={this.state.loading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
                 <Modal
@@ -287,7 +288,9 @@ class Function extends React.PureComponent {
                     destroyOnClose
                 >
                     <CommonForm
-                        ref={(instance) => { this.editFunctionForm = instance; }}
+                        ref={(instance) => {
+                            this.editFunctionForm = instance;
+                        }}
                         schema={schema.editSchema}
                         uiSchema={schema.editUiSchema}
                         formData={this.editFormData}

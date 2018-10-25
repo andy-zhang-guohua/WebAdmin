@@ -62,7 +62,7 @@ class Menu extends React.PureComponent {
             title: menu.title,
             functionCode: menu.functionCode,
             sort: menu.sort,
-            leftMemu: menu.leftMemu,
+            leftMenu: menu.leftMenu,
             isLock: menu.isLock,
             icon: menu.icon
         });
@@ -229,7 +229,7 @@ class Menu extends React.PureComponent {
 
                                 label="是否左侧显示"
                             >
-                                {getFieldDecorator('leftMemu', { valuePropName: 'checked' })(
+                                {getFieldDecorator('leftMenu', { valuePropName: 'checked' })(
                                     <Switch />
                                 )}
                             </FormItem>

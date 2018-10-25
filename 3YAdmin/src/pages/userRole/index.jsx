@@ -1,11 +1,12 @@
 import React from 'react';
-import { Table, Divider, Modal, Tag, Button } from 'antd';
+import {Table, Divider, Modal, Tag, Button} from 'antd';
 import {
     getUserPagedList
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import schema from '@/schema/userRole';
+} from '../../services/api';
+import SearchForm from '../../schema/SearchForm';
+import schema from '../../schema/userRole';
 import EditUserRoleModalContent from './editUserRoleModalContent';
+
 class UserRole extends React.PureComponent {
     state = {
         tableFilter: {
@@ -62,15 +63,13 @@ class UserRole extends React.PureComponent {
 
                     >
                         角色列表
-                </a>
+                    </a>
                 </div>
             }
         }]
-    editFormData = {
-
-    }
+    editFormData = {}
     handleSearch = (filter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = 1;
         this.setState({
             tableFilter: filter,
@@ -91,7 +90,7 @@ class UserRole extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -111,7 +110,7 @@ class UserRole extends React.PureComponent {
         this.fetch(query);
     }
     editUserRole = (record) => {
-        this.editFormData = { ...record };
+        this.editFormData = {...record};
         this.setState({
             editModalVisible: true
         })
@@ -132,10 +131,10 @@ class UserRole extends React.PureComponent {
         this.fetch(query);
     }
     fetch = async (query = {}) => {
-        this.setState({ tableLoading: true });
+        this.setState({tableLoading: true});
         let dataRes = await getUserPagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.tablePagination };
+        const pagination = {...this.state.tablePagination};
         pagination.total = data.totalCount;
         this.setState({
             tableLoading: false,
@@ -143,15 +142,18 @@ class UserRole extends React.PureComponent {
             tablePagination: pagination
         });
     }
+
     componentDidMount() {
         this.refresh()
     }
+
     render() {
         console.log("UserRole render")
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
                 <Table
                     columns={this.columns}
                     rowKey={record => record.id}
@@ -159,7 +161,7 @@ class UserRole extends React.PureComponent {
                     pagination={this.state.tablePagination}
                     loading={this.state.tableLoading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
                 <Modal
@@ -172,7 +174,7 @@ class UserRole extends React.PureComponent {
                     ]}
                     destroyOnClose
                 >
-                    <EditUserRoleModalContent formData={this.editFormData} />
+                    <EditUserRoleModalContent formData={this.editFormData}/>
                 </Modal>
             </div>
         );

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateModule } from '@/reducers/app';
-import MySider from '@/components/MySider';
-import MenuToRouter from '@/menuMapToRouter';
-import util from '@/utils/util';
+import { updateModule } from '../redux/reducers/app';
+import LeftSide from '../components/LeftSide';
+import MenuToRouter from '../app-metadata/MenuPageRouterMapping';
+import util from '../utils/util';
 
-class MySiderContainer extends React.PureComponent {
+class LeftSideContainer extends React.PureComponent {
     state = {
         openKeys: [],
         selectedKey: ''
@@ -21,7 +21,7 @@ class MySiderContainer extends React.PureComponent {
                 let currentModule = parentKeys[0];
                 let accessMenu = this.props.accessMenu;
                 let moduleList = accessMenu.filter(item => {
-                    return item.leftMemu && item.name === currentModule
+                    return item.leftMenu && item.name === currentModule
                 });
                 if (moduleList.length > 0) {
                     let moduleMenu = moduleList[0].children;
@@ -50,11 +50,8 @@ class MySiderContainer extends React.PureComponent {
             });
         }
     }
-    // menuClick = e => {
-    //     this.setState({
-    //         selectedKey: e.key
-    //     });
-    // };//不需要点击事件,切换路由的时候会触发initMenu,选中相应菜单
+
+    //不需要点击事件,切换路由的时候会触发initMenu,选中相应菜单
     openMenu = v => {
         let parentKeys = util.getParentMenusByName(this.props.openAccessMenu, v[v.length - 1]).map(item => {
             return item.name;
@@ -64,13 +61,12 @@ class MySiderContainer extends React.PureComponent {
         })
     };
     render() {
-        console.log("MySider render");
+        console.log("LeftSideContainer render");
         return (
-            <MySider
+            <LeftSide
                 responsive={this.props.responsive}
                 collapsed={this.props.collapsed}
                 menus={this.props.menus}
-                // menuClick={this.menuClick}
                 openMenu={this.openMenu}
                 selectedKey={this.state.selectedKey}
                 openKeys={this.state.openKeys}
@@ -93,4 +89,4 @@ const mapDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(MySiderContainer);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(LeftSideContainer);

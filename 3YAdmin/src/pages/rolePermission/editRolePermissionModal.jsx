@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Tree } from 'antd';
-import { getMenuFunctions } from 'api';
+import { getMenuFunctions } from '../../services/api';
 
 const TreeNode = Tree.TreeNode;
 

@@ -1,30 +1,15 @@
 import React from 'react';
-import { Table, Popconfirm, Divider, Button, notification,Modal } from 'antd';
-import {
-    getUserPagedList,
-    delUser,
-    delUsers,
-    saveUser
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import schema from '@/schema/user';
+import {Button, Divider, Modal, notification, Popconfirm, Table} from 'antd';
+import {delUser, delUsers, getUserPagedList, saveUser} from '../../services/api';
+import SearchForm from '../../schema/SearchForm';
+import schema from '../../schema/user';
 import EditUserModalContent from './editUserModalContent';
+
 class User extends React.PureComponent {
     state = {
         tableFilter: {
-            
-              
-                 name:"",
-              
-            
-              
-            
-              
-                 email:"",
-              
-            
-              
-            
+            name: "",
+            email: "",
         },
         searchFormExpand: true,
         tableSelectedRowKeys: [],
@@ -44,65 +29,60 @@ class User extends React.PureComponent {
         editModalVisible: false
     }
     columns = [
-    
-     
-       {
-        title: '账号名称',
-        dataIndex: 'name',
-        sorter: true
-       },
-     
-    
-     
-       {
-        title: '用户名称',
-        dataIndex: 'trueName',
-        sorter: true
-       },
-     
-    
-     
-       {
-        title: '用户邮箱',
-        dataIndex: 'email',
-        sorter: true
-       },
-     
-    
-     
-       {
-        title: 'phone',
-        dataIndex: 'phone',
-        sorter: true
-       },
-     
-    
-    {
-        title: '操作',
-        dataIndex: 'id',
-        fixed: 'right',
-        width: 120,
-        render: (text, record) => {
-            return <div>
-                <a
-                    href="javascript:;"
-                    onClick={() => this.editUser(record)}
 
-                >
-                    编辑
-                </a>
-                <Divider type="vertical" />
-                <Popconfirm title="确定删除?" onConfirm={() => this.delUser(record.id)}>
-                    <a href="javascript:;">删除</a>
-                </Popconfirm>
-            </div>
-        }
-    }]
-    editFormData = {
 
-    }
+        {
+            title: '账号名称',
+            dataIndex: 'name',
+            sorter: true
+        },
+
+
+        {
+            title: '用户名称',
+            dataIndex: 'trueName',
+            sorter: true
+        },
+
+
+        {
+            title: '用户邮箱',
+            dataIndex: 'email',
+            sorter: true
+        },
+
+
+        {
+            title: 'phone',
+            dataIndex: 'phone',
+            sorter: true
+        },
+
+
+        {
+            title: '操作',
+            dataIndex: 'id',
+            fixed: 'right',
+            width: 120,
+            render: (text, record) => {
+                return <div>
+                    <a
+                        href="javascript:;"
+                        onClick={() => this.editUser(record)}
+
+                    >
+                        编辑
+                    </a>
+                    <Divider type="vertical"/>
+                    <Popconfirm title="确定删除?" onConfirm={() => this.delUser(record.id)}>
+                        <a href="javascript:;">删除</a>
+                    </Popconfirm>
+                </div>
+            }
+        }]
+    editFormData = {}
     handleSearch = (filter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = 1;
         this.setState({
             tableFilter: filter,
@@ -123,7 +103,7 @@ class User extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -143,7 +123,7 @@ class User extends React.PureComponent {
         this.fetch(query);
     }
     onSelectChange = (selectedRowKeys) => {
-        this.setState({ tableSelectedRowKeys:selectedRowKeys });
+        this.setState({tableSelectedRowKeys: selectedRowKeys});
     }
     addUser = () => {
         this.editFormData = {}
@@ -173,14 +153,14 @@ class User extends React.PureComponent {
         this.refresh()
     }
     editUser = (record) => {
-        this.editFormData = { ...record };
+        this.editFormData = {...record};
         this.setState({
             editModalVisible: true
         })
     }
     delUser = async (id) => {
         try {
-            await delUser({ id: id });
+            await delUser({id: id});
             notification.success({
                 placement: 'bottomLeft bottomRight',
                 message: '删除成功',
@@ -199,7 +179,7 @@ class User extends React.PureComponent {
         this.editContent.onOk()
     }
     saveUser = async (data) => {
-        let formData = { ...this.editFormData, ...data }
+        let formData = {...this.editFormData, ...data}
         try {
             await saveUser(formData);
             this.setState({
@@ -226,33 +206,36 @@ class User extends React.PureComponent {
         this.fetch(query);
     }
     fetch = async (query = {}) => {
-        this.setState({ tableLoading: true });
+        this.setState({tableLoading: true});
         let dataRes = await getUserPagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.tablePagination };
+        const pagination = {...this.state.tablePagination};
         pagination.total = data.totalCount;
         this.setState({
             tableLoading: false,
             tablePagedList: data.rows,
-            tablePagination:pagination
+            tablePagination: pagination
         });
     }
+
     componentDidMount() {
         this.refresh()
     }
+
     render() {
         console.log("User render")
-        const { tableSelectedRowKeys } = this.state;
+        const {tableSelectedRowKeys} = this.state;
         const rowSelection = {
-            selectedRowKeys:tableSelectedRowKeys,
+            selectedRowKeys: tableSelectedRowKeys,
             onChange: this.onSelectChange,
         };
         const hasSelected = tableSelectedRowKeys.length > 0;
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
-                <div style={{ marginBottom: 16 }}>
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
+                <div style={{marginBottom: 16}}>
                     <Button
                         type="primary"
                         icon="plus-square-o"
@@ -260,7 +243,7 @@ class User extends React.PureComponent {
                     >
                         新增
                     </Button>
-                    <Divider type="vertical" />
+                    <Divider type="vertical"/>
                     <Popconfirm title="确定删除?" onConfirm={this.batchDelUser}>
                         <Button
                             type="danger"
@@ -279,7 +262,7 @@ class User extends React.PureComponent {
                     pagination={this.state.tablePagination}
                     loading={this.state.tableLoading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
                 <Modal
@@ -292,7 +275,9 @@ class User extends React.PureComponent {
                     destroyOnClose
                 >
                     <EditUserModalContent
-                        ref={(instance) => { this.editContent = instance; }}
+                        ref={(instance) => {
+                            this.editContent = instance;
+                        }}
                         schema={schema.editSchema}
                         uiSchema={schema.editUiSchema}
                         formData={this.editFormData}

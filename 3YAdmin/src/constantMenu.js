@@ -2,31 +2,31 @@
 export default [{
     name: 'example',
     title: '例子',
-    leftMemu: true,
+    leftMenu: true,
     children: [
         {
             name: 'permission_test',
             title: '权限测试页',
             icon: 'key',
-            leftMemu: true,
+            leftMenu: true,
         },
         {
             name: 'error',
             title: '错误页面',
             icon: 'warning',
-            leftMemu: true,
+            leftMenu: true,
             children: [
                 {
                     name: 'error_404',
                     title: '404',
                     icon:'file-unknown',
-                    leftMemu: true,
+                    leftMenu: true,
                 },
                 {
                     name: 'error_403',
                     title: '403',
                     icon:'lock',
-                    leftMemu: true,
+                    leftMenu: true,
                 }
             ]
         },
@@ -34,25 +34,25 @@ export default [{
             name: 'form',
             title: 'JSON表单',
             icon: 'form',
-            leftMemu: true,
+            leftMenu: true,
             children: [
                 {
                     name: 'search_form',
                     title: 'Search Form',
                     icon:'search',
-                    leftMemu: true,
+                    leftMenu: true,
                 },
                 {
                     name: 'common_form',
                     title: 'Common Form',
                     icon:'edit',
-                    leftMemu: true,
+                    leftMenu: true,
                 },
                 {
                     name: 'dynamic_form',
                     title: 'Dynamic Form',
                     icon:'credit-card',
-                    leftMemu: true,
+                    leftMenu: true,
                 }
             ]
         }

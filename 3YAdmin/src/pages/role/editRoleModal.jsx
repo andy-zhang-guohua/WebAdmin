@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import CommonForm from '@/schema/CommonForm';
+import CommonForm from '../../schema/CommonForm';
 
 
 class EditRoleModal extends React.PureComponent {

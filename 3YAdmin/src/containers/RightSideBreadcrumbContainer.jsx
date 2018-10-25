@@ -2,10 +2,10 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Breadcrumb, Icon } from 'antd';
-import MenuToRouter from '@/menuMapToRouter';
-import util from '@/utils/util';
+import MenuResourceMapping from '../app-metadata/MenuPageRouterMapping';
+import util from '../utils/util';
 
-class MyBreadcrumb extends React.PureComponent {
+class RightSideBreadcrumbContainer extends React.PureComponent {
     state = {
         map: [{
             name: "home",
@@ -23,7 +23,7 @@ class MyBreadcrumb extends React.PureComponent {
                 path: "/app/home"
             }
         ];
-        let name = Object.keys(MenuToRouter).find(key => MenuToRouter[key] === nextProps.location.pathname);
+        let name = Object.keys(MenuResourceMapping).find(key => MenuResourceMapping[key] === nextProps.location.pathname);
         if (name) {
             let parents = util.getParentMenusByName(this.props.openAccessMenu, name);
             for (let p of parents) {
@@ -39,7 +39,7 @@ class MyBreadcrumb extends React.PureComponent {
 
     }
     render() {
-        console.log("MyBreadcrumb render")
+        console.log("RightSideBreadcrumbContainer render")
         return (
             <Breadcrumb style={this.props.style}>
                 {this.state.map.map(
@@ -61,4 +61,4 @@ const mapStateToProps = state => {
         openAccessMenu: state.app.openAccessMenu
     }
 }
-export default withRouter(connect(mapStateToProps)(MyBreadcrumb));
+export default withRouter(connect(mapStateToProps)(RightSideBreadcrumbContainer));

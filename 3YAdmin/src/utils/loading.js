@@ -1,10 +1,8 @@
-import store from '@/store';
-import { message } from 'antd';
-import { spinLoading } from '@/reducers/app'
+import store from '../redux/store';
+import {message} from 'antd';
+import {spinLoading} from '../redux/reducers/app'
 
-let loading = {
-
-}
+let loading = {}
 
 let hide = false;
 

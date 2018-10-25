@@ -1,6 +1,4 @@
-let permission = {
-
-}
+let permission = {}
 
 permission.check = function (config) {
     if (config.permission && config.permission.length > 0) {

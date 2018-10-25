@@ -1,13 +1,13 @@
 import React from 'react';
-import { Table, Popconfirm, Divider, Button, notification } from 'antd';
+import {Table, Popconfirm, Divider, Button, notification} from 'antd';
 import {
     getRolePagedList,
     delRole,
     delRoles,
     saveRole
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import schema from '@/schema/role';
+} from '../../services/api';
+import SearchForm from '../../schema/SearchForm';
+import schema from '../../schema/role';
 import EditRoleModal from './editRoleModal';
 
 class Role extends React.PureComponent {
@@ -38,40 +38,38 @@ class Role extends React.PureComponent {
         dataIndex: 'name',
         sorter: true
     },
-    {
-        title: '角色编码',
-        dataIndex: 'code',
-        sorter: true
-    },
-    {
-        title: '操作',
-        dataIndex: 'id',
-        fixed: 'right',
-        width: 120,
-        render: (text, record) => {
-            return <div>
-                <a
-                    href="javascript:;"
-                    onClick={() => this.editRole(record)}
+        {
+            title: '角色编码',
+            dataIndex: 'code',
+            sorter: true
+        },
+        {
+            title: '操作',
+            dataIndex: 'id',
+            fixed: 'right',
+            width: 120,
+            render: (text, record) => {
+                return <div>
+                    <a
+                        href="javascript:;"
+                        onClick={() => this.editRole(record)}
 
-                >
-                    编辑
-                </a>
-                <Divider type="vertical" />
-                <Popconfirm title="确定删除?" onConfirm={() => this.delRole(record.id)}>
-                    <a href="javascript:;">删除</a>
-                </Popconfirm>
-            </div>
-        }
-    }]
-    editFormData = {
-
-    }
+                    >
+                        编辑
+                    </a>
+                    <Divider type="vertical"/>
+                    <Popconfirm title="确定删除?" onConfirm={() => this.delRole(record.id)}>
+                        <a href="javascript:;">删除</a>
+                    </Popconfirm>
+                </div>
+            }
+        }]
+    editFormData = {}
     /**
      * @description 查询
      */
     handleSearch = (filter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = 1;
         this.setState({
             tableFilter: filter,
@@ -95,7 +93,7 @@ class Role extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -115,7 +113,7 @@ class Role extends React.PureComponent {
         this.fetch(query);
     }
     onSelectChange = (selectedRowKeys) => {
-        this.setState({ tableSelectedRowKeys:selectedRowKeys });
+        this.setState({tableSelectedRowKeys: selectedRowKeys});
     }
     addRole = () => {
         this.editFormData = {}
@@ -145,14 +143,14 @@ class Role extends React.PureComponent {
         this.refresh()
     }
     editRole = (record) => {
-        this.editFormData = { ...record };
+        this.editFormData = {...record};
         this.setState({
             editModalVisible: true
         })
     }
     delRole = async (id) => {
         try {
-            await delRole({ id: id });
+            await delRole({id: id});
             notification.success({
                 placement: 'bottomLeft bottomRight',
                 message: '删除成功',
@@ -168,7 +166,7 @@ class Role extends React.PureComponent {
         });
     }
     saveRole = async (data) => {
-        let formData = { ...this.editFormData, ...data }
+        let formData = {...this.editFormData, ...data}
         try {
             await saveRole(formData);
             this.setState({
@@ -195,33 +193,36 @@ class Role extends React.PureComponent {
         this.fetch(query);
     }
     fetch = async (query = {}) => {
-        this.setState({ tableLoading: true });
+        this.setState({tableLoading: true});
         let dataRes = await getRolePagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.tablePagination };
+        const pagination = {...this.state.tablePagination};
         pagination.total = data.totalCount;
         this.setState({
             tableLoading: false,
             tablePagedList: data.rows,
-            tablePagination:pagination
+            tablePagination: pagination
         });
     }
+
     componentDidMount() {
         this.refresh()
     }
+
     render() {
         console.log("Role render")
-        const { tableSelectedRowKeys } = this.state;
+        const {tableSelectedRowKeys} = this.state;
         const rowSelection = {
-            selectedRowKeys:tableSelectedRowKeys,
+            selectedRowKeys: tableSelectedRowKeys,
             onChange: this.onSelectChange,
         };
         const hasSelected = tableSelectedRowKeys.length > 0;
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
-                <div style={{ marginBottom: 16 }}>
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
+                <div style={{marginBottom: 16}}>
                     <Button
                         type="primary"
                         icon="plus-square-o"
@@ -229,7 +230,7 @@ class Role extends React.PureComponent {
                     >
                         新增
                     </Button>
-                    <Divider type="vertical" />
+                    <Divider type="vertical"/>
                     <Popconfirm title="确定删除?" onConfirm={this.batchDelRole}>
                         <Button
                             type="danger"
@@ -248,7 +249,7 @@ class Role extends React.PureComponent {
                     pagination={this.state.tablePagination}
                     loading={this.state.tableLoading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
                 <EditRoleModal

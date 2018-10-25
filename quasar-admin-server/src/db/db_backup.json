@@ -34,7 +34,7 @@
       "icon": "mobile",
       "title": "网站",
       "name": "网站",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "",
       "isLock": false,
       "sort": 2
@@ -46,7 +46,7 @@
       "icon": "pie-chart",
       "title": "CMS",
       "name": "CMS",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": ""
     },
     {
@@ -56,7 +56,7 @@
       "icon": "file-word",
       "title": "文章管理",
       "name": "article",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "article_view",
       "sort": 2,
       "isLock": false
@@ -68,7 +68,7 @@
       "icon": "appstore",
       "title": "系统",
       "name": "系统",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "",
       "sort": 1
     },
@@ -79,7 +79,7 @@
       "icon": "setting",
       "title": "系统设置",
       "name": "系统设置",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": ""
     },
     {
@@ -89,7 +89,7 @@
       "icon": "chrome",
       "title": "菜单管理",
       "name": "menu",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "menu_view"
     },
     {
@@ -99,7 +99,7 @@
       "icon": "key",
       "title": "权限管理",
       "name": "权限管理",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": ""
     },
     {
@@ -109,7 +109,7 @@
       "icon": "solution",
       "title": "功能管理",
       "name": "function",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "function_view"
     },
     {
@@ -119,7 +119,7 @@
       "icon": "idcard",
       "title": "角色管理",
       "name": "role",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "role_view"
     },
     {
@@ -129,7 +129,7 @@
       "icon": "calculator",
       "title": "角色权限管理",
       "name": "rolepermission",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "role_permission_view"
     },
     {
@@ -139,7 +139,7 @@
       "icon": "android",
       "title": "角色用户管理",
       "name": "roleuser",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "role_user_view"
     },
     {
@@ -149,7 +149,7 @@
       "icon": "dropbox",
       "title": "用户角色管理",
       "name": "userrole",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "user_role_view"
     },
     {
@@ -159,7 +159,7 @@
       "icon": "usergroup-add",
       "title": "组织架构",
       "name": "组织架构",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": ""
     },
     {
@@ -169,7 +169,7 @@
       "icon": "slack-square",
       "title": "部门管理",
       "name": "department",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "department_view"
     },
     {
@@ -179,7 +179,7 @@
       "icon": "instagram",
       "title": "职位管理",
       "name": "position",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "position_view"
     },
     {
@@ -189,7 +189,7 @@
       "icon": "user-add",
       "title": "用户管理",
       "name": "用户管理",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": ""
     },
     {
@@ -199,7 +199,7 @@
       "icon": "twitter",
       "title": "用户管理",
       "name": "user_index",
-      "leftMemu": true,
+      "leftMenu": true,
       "functionCode": "user_view"
     },
     {
@@ -207,7 +207,7 @@
       "parentId": 0,
       "path": "/",
       "name": "otherRouter",
-      "leftMemu": false,
+      "leftMenu": false,
       "icon": "video-camera",
       "functionCode": "",
       "title": "首页"
@@ -236,7 +236,7 @@
       "title": "开发",
       "name": "开发",
       "icon": "paper-clip",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 3
     },
     {
@@ -245,7 +245,7 @@
       "title": "官方组件",
       "name": "official",
       "icon": "ant-design",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 1
     },
     {
@@ -254,7 +254,7 @@
       "title": "业务组件",
       "name": "business",
       "icon": "bulb",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 2
     },
     {
@@ -263,7 +263,7 @@
       "title": "Buttons",
       "name": "buttons",
       "icon": "up-square",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 1
     },
     {
@@ -272,7 +272,7 @@
       "title": "sku",
       "name": "sku",
       "icon": "clock-circle",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 1
     },
     {
@@ -281,7 +281,7 @@
       "title": "Button",
       "name": "button",
       "icon": "right-circle-o",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 1
     },
     {
@@ -289,7 +289,7 @@
       "parentId": "0421723a-1493-4259-b9c0-fbac9e7aaa8f",
       "title": "Button-Group",
       "name": "button-group",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 2,
       "icon": "retweet"
     },
@@ -299,7 +299,7 @@
       "title": "Dropdown Button",
       "name": "dropdown-button",
       "icon": "arrow-up",
-      "leftMemu": true,
+      "leftMenu": true,
       "isLock": false,
       "sort": 3
     },
@@ -309,7 +309,7 @@
       "title": "Navigation",
       "name": "navigation",
       "icon": "arrows-alt",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 2
     },
     {
@@ -317,7 +317,7 @@
       "parentId": "b4db3bed-b26b-48de-ba75-5e8c350c1f3c",
       "title": "Toolbar",
       "name": "toolbar",
-      "leftMemu": true,
+      "leftMenu": true,
       "sort": 1,
       "icon": "minus-circle"
     },
@@ -334,7 +334,7 @@
       "title": "文章编辑",
       "name": "post_edit",
       "icon": "card_giftcard",
-      "leftMemu": false,
+      "leftMenu": false,
       "functionCode": "post_edit"
     }
   ],

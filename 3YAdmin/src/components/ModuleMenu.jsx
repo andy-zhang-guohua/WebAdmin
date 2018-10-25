@@ -1,11 +1,17 @@
 import React from 'react';
-import { Menu } from 'antd';
+import {Menu} from 'antd';
 
+/**
+ * 模块菜单：一组水平方向组织的菜单项，每个菜单项对应用用于可访问的一个模块
+ */
 class ModuleMenu extends React.PureComponent {
     render() {
-        const list = [];
-        for (let item of this.props.moduleList) {
-            list.push(
+        console.log("User's modules:", this.props.modules);
+
+        // 用于展示各个模块名称的菜单项
+        const menuItems = [];
+        for (let item of this.props.modules) {
+            menuItems.push(
                 <Menu.Item key={item.name}>
                     {item.title}
                 </Menu.Item>
@@ -18,9 +24,10 @@ class ModuleMenu extends React.PureComponent {
                 mode="horizontal"
                 style={this.props.style}
             >
-                {list}
+                {menuItems}
             </Menu>
         )
     }
 }
+
 export default ModuleMenu;

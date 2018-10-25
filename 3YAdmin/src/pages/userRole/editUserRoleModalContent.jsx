@@ -1,11 +1,12 @@
 import React from 'react';
-import { Table, Divider, notification, Badge } from 'antd';
+import {Table, Divider, notification, Badge} from 'antd';
 import {
     editRoleUser,
     getRolePagedList
-} from 'api';
-import SearchForm from '@/schema/SearchForm';
-import schema from '@/schema/role';
+} from '../../services/api';
+import SearchForm from '../../schema/SearchForm';
+import schema from '../../schema/role';
+
 class EditUserRoleModalContent extends React.PureComponent {
     state = {
         tableFilter: {
@@ -46,7 +47,7 @@ class EditUserRoleModalContent extends React.PureComponent {
             align: 'center',
             render: (text, record) => {
                 return (
-                    record.isAdd == 1 ? <Badge status="success" /> : <Badge status="error" />
+                    record.isAdd == 1 ? <Badge status="success"/> : <Badge status="error"/>
                 )
             }
         },
@@ -62,7 +63,7 @@ class EditUserRoleModalContent extends React.PureComponent {
                         <a
                             href="javascript:;"
                             onClick={() => this.modifyRoleUser(record, 0)}
-                            style={{ color: '#f5222d' }}
+                            style={{color: '#f5222d'}}
                         >
                             移除
                         </a>
@@ -79,7 +80,7 @@ class EditUserRoleModalContent extends React.PureComponent {
         }]
     handleSearch = (filter) => {
         filter.userId = this.props.formData.id;
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = 1;
         this.setState({
             tableFilter: filter,
@@ -102,7 +103,7 @@ class EditUserRoleModalContent extends React.PureComponent {
         });
     }
     handleTableChange = (pagination, filters, sorter) => {
-        const pager = { ...this.state.tablePagination };
+        const pager = {...this.state.tablePagination};
         pager.current = pagination.current;
         pager.pageSize = pagination.pageSize;
         this.setState({
@@ -152,10 +153,10 @@ class EditUserRoleModalContent extends React.PureComponent {
         this.fetch(query);
     }
     fetch = async (query = {}) => {
-        this.setState({ tableLoading: true });
+        this.setState({tableLoading: true});
         let dataRes = await getRolePagedList(query);
         let data = dataRes.data;
-        const pagination = { ...this.state.tablePagination };
+        const pagination = {...this.state.tablePagination};
         pagination.total = data.totalCount;
         this.setState({
             tableLoading: false,
@@ -163,14 +164,17 @@ class EditUserRoleModalContent extends React.PureComponent {
             tablePagination: pagination
         });
     }
+
     componentDidMount() {
         this.refresh()
     }
+
     render() {
         return (
             <div>
-                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema} handleSubmit={this.handleSearch} handleReset={this.handleReset} />
-                <Divider />
+                <SearchForm schema={schema.searchSchema} uiSchema={schema.searchUiSchema}
+                            handleSubmit={this.handleSearch} handleReset={this.handleReset}/>
+                <Divider/>
                 <Table
                     columns={this.columns}
                     rowKey={record => record.id}
@@ -178,7 +182,7 @@ class EditUserRoleModalContent extends React.PureComponent {
                     pagination={this.state.tablePagination}
                     loading={this.state.tableLoading}
                     onChange={this.handleTableChange}
-                    scroll={{ x: 768 }}
+                    scroll={{x: 768}}
                     bordered
                 />
             </div>

@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
 import './TabMode.css';
-import MyHeader from '@/containers/MyHeader';
-import MySider from '@/containers/MySider';
-import MyNavTabs from '@/containers/MyNavTabsR';
-import { getToken } from '@/utils/token';
-import { getUserInfo, getAccessMemu } from 'api';
-import { updateUserInfo } from '@/reducers/user';
-import { updateAccessMenu } from '@/reducers/app';
-import util from '@/utils/util';
-import constantMenu from '@/constantMenu';
+import RightSideHeaderContainer from '../containers/RightSideHeaderContainer';
+import LeftSideContainer from '../containers/LeftSideContainer';
+import MyNavTabs from '../containers/MyNavTabsR';
+import { getToken } from '../utils/token';
+import { getUserInfo, getAccessMenu } from '../services/api';
+import { updateUserInfo } from '../redux/reducers/user';
+import { updateAccessMenu } from '../redux/reducers/app';
+import util from '../utils/util';
+import constantMenu from '../constantMenu';
 
 const { Content } = Layout;
 
@@ -64,7 +64,7 @@ class TabMode extends React.PureComponent {
         }
     }
     toggle = () => {
-        this.refs['MySider'].wrappedInstance.setOpenKeys(this.state.collapsed);//https://github.com/ant-design/ant-design/issues/8911
+        this.refs['LeftSideContainer'].wrappedInstance.setOpenKeys(this.state.collapsed);//https://github.com/ant-design/ant-design/issues/8911
         this.setState({
             collapsed: !this.state.collapsed,
         });
@@ -79,7 +79,7 @@ class TabMode extends React.PureComponent {
             this.props.history.push('/login');
             return;
         }
-        let [infoRes, menuRes] = await Promise.all([getUserInfo(), getAccessMemu()]);
+        let [infoRes, menuRes] = await Promise.all([getUserInfo(), getAccessMenu()]);
         let permission = [...infoRes.data.userRole, ...infoRes.data.userPermission];
         let isAdmin = infoRes.data.isAdmin;
         let userInfo = {
@@ -91,9 +91,9 @@ class TabMode extends React.PureComponent {
         localStorage.setItem("permission", JSON.stringify(permission));
         localStorage.setItem("isAdmin", isAdmin);
         menuRes.data.push(...constantMenu);
-        let openAccesseMenu = util.openAccesseMenu(menuRes.data);
+        let openAccesseMenu = util.openAccessMenu(menuRes.data);
         let moduleList = menuRes.data.filter(item => {
-            return item.leftMemu
+            return item.leftMenu
         });
         let currentModule = moduleList[0].name;
         let moduleMenu = moduleList[0].children;
@@ -102,27 +102,27 @@ class TabMode extends React.PureComponent {
             accessMenu: menuRes.data,
             openAccessMenu: openAccesseMenu,
             moduleMenu: moduleMenu,
-            moduleList: moduleList
+            modules: moduleList
         });
         this.props.updateUserInfo(userInfo);
         this.initChildData(this.props);
     }
     initChildData(props) {
-        this.refs['MySider'].wrappedInstance.initMenu(props.location.pathname);
+        this.refs['LeftSideContainer'].wrappedInstance.initMenu(props.location.pathname);
     }
     render() {
         console.log("App render");
         return (
             <Layout>
-                <MySider
-                    ref={'MySider'}
+                <LeftSideContainer
+                    ref={'LeftSideContainer'}
                     responsive={this.state.responsive}
                     collapsed={this.state.collapsed}
                 >
-                </MySider>
+                </LeftSideContainer>
                 <Layout>
-                    <MyHeader collapsed={this.state.collapsed} toggle={this.toggle} toggleNavTab={this.toggleNavTab} navTabshow={this.state.navTabShow}>
-                    </MyHeader>
+                    <RightSideHeaderContainer collapsed={this.state.collapsed} toggle={this.toggle} toggleNavTab={this.toggleNavTab} navTabshow={this.state.navTabShow}>
+                    </RightSideHeaderContainer>
                     {/* <MyBreadcrumb style={{ padding: '10px 10px 10px 17px', background: 'rgb(250, 250, 250)', marginTop: this.state.navTabTop + 59 + (this.state.navTabShow ? 0 : -59) }} /> */}
                     <Content style={{ padding: 24, paddingTop: 0, background: '#fff' }}>
                         <MyNavTabs style={{ marginTop: this.state.navTabTop, width: '100%', display: this.state.navTabShow ? 'block' : 'none' }} show={this.state.navTabShow} />

@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Tabs } from 'antd';
 import { withRouter } from 'react-router-dom';
-import MenuToRouter from '@/menuMapToRouter';
-import MenuMapToComponent from '@/menuMapToComponent';
+import MenuResourceMapping from '../app-metadata/MenuPageRouterMapping';
+import MenuPageComponentMapping from '../app-metadata/MenuPageComponentMapping';
 
 const TabPane = Tabs.TabPane;
 
@@ -15,7 +15,7 @@ class MyNavTabs extends React.PureComponent {
       title: "首页",
       path: "/app/home",
       closable: false,
-      content: MenuMapToComponent["home"]
+      content: MenuPageComponentMapping["home"]
     }]
   }
   hasPermission = true
@@ -24,7 +24,7 @@ class MyNavTabs extends React.PureComponent {
       return;
     }
     const pathname = nextProps.location.pathname;
-    let name = Object.keys(MenuToRouter).find(key => MenuToRouter[key] === pathname);
+    let name = Object.keys(MenuResourceMapping).find(key => MenuResourceMapping[key] === pathname);
     if (name) {
       if (this.state.openPages.some(s => s.name === name)) {
         if (this.state.currentPage !== name) {
@@ -41,7 +41,7 @@ class MyNavTabs extends React.PureComponent {
           openPages.push({
             name: menu.name,
             title: menu.title,
-            path: MenuToRouter[menu.name],
+            path: MenuResourceMapping[menu.name],
             closable: true
           });
           this.setState({
@@ -110,7 +110,7 @@ class MyNavTabs extends React.PureComponent {
       return;
     }
     if (activeKey !== this.state.currentPage) {
-      this.props.history.push(MenuToRouter[activeKey]);
+      this.props.history.push(MenuResourceMapping[activeKey]);
     }
   }
   onEdit = (targetKey, action) => {
@@ -150,7 +150,7 @@ class MyNavTabs extends React.PureComponent {
           onTabClick={this.onTabClick}
         >
           {this.state.openPages.map(page => {
-            let Page = MenuMapToComponent[page.name] ? MenuMapToComponent[page.name] : MenuMapToComponent["page404"];
+            let Page = MenuPageComponentMapping[page.name] ? MenuPageComponentMapping[page.name] : MenuPageComponentMapping["page404"];
             return <TabPane forceRender tab={page.title} closable={page.closable} key={page.name}>
               <Page />
             </TabPane>

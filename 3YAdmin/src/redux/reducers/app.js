@@ -13,7 +13,7 @@ export default function (state, action) {
             currentModule: '',//当前模块
             accessMenu: [],//可访问的菜单,
             openAccessMenu: [],//展开的可访问的菜单(子级包含父级name)
-            moduleList: [],//模块列表
+            modules: [],//模块列表
             moduleMenu: [],//模块菜单
         }
     }
@@ -31,7 +31,7 @@ export default function (state, action) {
                 accessMenu: action.accessMenu,
                 openAccessMenu: action.openAccessMenu,
                 moduleMenu: action.moduleMenu,
-                moduleList: action.moduleList
+                modules: action.modules
             }
         case UPDATE_MODULE:
             return {

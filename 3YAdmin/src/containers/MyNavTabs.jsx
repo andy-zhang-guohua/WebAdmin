@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Tabs } from 'antd';
 import { withRouter } from 'react-router-dom';
-import MenuToRouter from '@/menuMapToRouter';
-import util from '@/utils/util';
+import MenuResourceMapping from '../app-metadata/MenuPageRouterMapping';
+import util from '../utils/util';
 
 const TabPane = Tabs.TabPane;
 
@@ -21,7 +21,7 @@ class MyNavTabs extends React.PureComponent {
     if (!nextProps.show) {
       return;
     }
-    let name = Object.keys(MenuToRouter).find(key => MenuToRouter[key] === nextProps.location.pathname);
+    let name = Object.keys(MenuResourceMapping).find(key => MenuResourceMapping[key] === nextProps.location.pathname);
     if (name) {
       if (this.state.openPages.some(s => s.name === name)) {
         if (this.state.currentPage !== name) {
@@ -36,7 +36,7 @@ class MyNavTabs extends React.PureComponent {
           openPages.push({
             name: menu.name,
             title: menu.title,
-            path: MenuToRouter[menu.name],
+            path: MenuResourceMapping[menu.name],
             closable: true
           });
           this.setState({
@@ -57,7 +57,7 @@ class MyNavTabs extends React.PureComponent {
       return;
     }
     if (activeKey !== this.state.currentPage) {
-      this.props.history.push(MenuToRouter[activeKey]);
+      this.props.history.push(MenuResourceMapping[activeKey]);
     }
   }
   onEdit = (targetKey, action) => {

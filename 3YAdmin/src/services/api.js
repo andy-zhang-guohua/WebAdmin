@@ -82,7 +82,7 @@ export function editRoleUser(data) {
 }
 
 //menu
-export function getAccessMemu() {
+export function getAccessMenu() {
   return request({
     url: '/menu/getaccessmenu',
     method: 'get',
