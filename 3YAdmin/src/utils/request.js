@@ -1,7 +1,7 @@
 import axios from 'axios'
-import {getToken, removeToken} from '@/utils/token'
-import loading from '@/utils/loading'
-import permission from '@/utils/permission'
+import {getToken, removeToken} from './token'
+import loading from './loading'
+import permission from './permission'
 import history from './history'
 import {message} from 'antd';
 
